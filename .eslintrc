@@ -1,0 +1,6 @@
+{
+  "extends": ["plugin:vue/base", "eslint:recommended"],
+  "rules": {
+    "no-unused-vars": ["warn"]
+  }
+}
