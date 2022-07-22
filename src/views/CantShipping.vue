@@ -52,19 +52,6 @@
               <Search />
             </el-icon>
           </el-button>
-          <el-upload
-            action=""
-            v-model="file"
-            :multiple="false"
-            :before-upload="onUpload"
-            :show-file-list="false"
-            :auto-upload="true"
-          >
-            <el-button ref="buttonRef" type="warning">
-              上傳
-              <el-icon class="el-icon--right"><Upload></Upload></el-icon>
-            </el-button>
-          </el-upload>
         </el-space>
       </div>
     </el-form>
@@ -72,12 +59,34 @@
     <el-divider />
 
     <el-space
-      :style="{ width: '100%', justifyContent: 'flex-end', margin: '12px 0' }"
+      :style="{
+        width: '100%',
+        justifyContent: 'flex-end',
+      }"
     >
+      <el-upload
+        action=""
+        v-model="file"
+        :multiple="false"
+        :before-upload="onUpload"
+        :show-file-list="false"
+        :auto-upload="true"
+      >
+        <el-button ref="buttonRef" type="success" plain>
+          上傳
+          <el-icon class="el-icon--right"><Upload></Upload></el-icon>
+        </el-button>
+      </el-upload>
       <ExportListBtn :list="list" v-if="list.length" />
     </el-space>
 
-    <el-table :data="list" @selection-change="handleSelectionChange">
+    <el-table
+      :data="list"
+      @selection-change="handleSelectionChange"
+      :style="{
+        margin: '20px 0',
+      }"
+    >
       <el-table-column type="selection" width="55" />
       <el-table-column prop="INAD001" :label="$t('INAD001')" align="left" />
       <el-table-column prop="INAD003" :label="$t('INAD003')" align="center" />

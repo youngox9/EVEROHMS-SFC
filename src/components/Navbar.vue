@@ -43,7 +43,7 @@
                 setIsMenuOpen(false);
               }
             "
-            :class="isActive ? 'active' : ''"
+            :class="isSite ? 'active' : ''"
           >
             即時報工作業
           </el-button>
@@ -114,7 +114,7 @@
             "
             :class="isActive ? 'active' : ''"
           >
-            ASFR338工單重工轉出報表
+            ASFR338重工轉出報表
           </el-button>
         </router-link>
       </div>
@@ -154,5 +154,9 @@ const areaText = computed(() => {
 
 const isLogin = computed(() => {
   return store?.state?.global?.profile?.accessToken || false;
+});
+
+const isSite = computed(() => {
+  return window.location.href.includes("site/");
 });
 </script>

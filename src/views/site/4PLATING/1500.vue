@@ -3,6 +3,7 @@
   <Layout :auth="true">
     <h2>即時報工作業</h2>
     <SearchBar :path="'4plating'" />
+    <el-divider />
     <!-- 表單內容 -->
     <el-form
       ref="formRef"
@@ -15,8 +16,7 @@
       :label-position="'top'"
       v-if="isSearch"
     >
-      <el-divider />
-      <h2>{{ form.SFFB009 }} / {{ form.SFFB009_DESC }}</h2>
+      <h3>{{ form.SFFB009 }} / {{ form.SFFB009_DESC }}</h3>
       <el-row :gutter="24">
         <el-col :xs="24" :sm="8">
           <!-- 報工單號 -->
@@ -116,7 +116,7 @@
           </el-form-item>
         </el-col>
         <!--  Ni 安培  -->
-        <el-col :xs="24" :sm="12">
+        <el-col :xs="24" :sm="6">
           <el-form-item :label="$t('SFFBUA001')" prop="SFFBUA001">
             <el-input
               type="numbter"
@@ -126,7 +126,7 @@
           </el-form-item>
         </el-col>
         <!-- Ni 分鐘 -->
-        <el-col :xs="24" :sm="12">
+        <el-col :xs="24" :sm="6">
           <el-form-item :label="$t('SFFBUA003')" prop="SFFBUA003">
             <el-input
               type="number"
@@ -136,7 +136,7 @@
           </el-form-item>
         </el-col>
         <!--  Sn 安培  -->
-        <el-col :xs="24" :sm="12">
+        <el-col :xs="24" :sm="6">
           <el-form-item :label="$t('SFFBUA002')" prop="SFFBUA002">
             <el-input
               type="number"
@@ -147,7 +147,7 @@
         </el-col>
 
         <!-- Sn 分鐘 -->
-        <el-col :xs="24" :sm="12">
+        <el-col :xs="24" :sm="6">
           <el-form-item :label="$t('SFFBUA004')" prop="SFFBUA004">
             <el-input
               type="number"

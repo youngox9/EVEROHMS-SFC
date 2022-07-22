@@ -3,6 +3,7 @@
   <Layout :auth="true">
     <h2>即時報工作業</h2>
     <SearchBar :path="'4plating'" />
+    <el-divider />
     <!-- 表單內容 -->
     <el-form
       ref="formRef"
@@ -15,8 +16,7 @@
       :label-position="'top'"
       v-if="isSearch"
     >
-      <el-divider />
-      <h2>{{ form.SFFB009 }} / {{ form.SFFB009_DESC }}</h2>
+      <h3>{{ form.SFFB009 }} / {{ form.SFFB009_DESC }}</h3>
       <el-row :gutter="24">
         <el-col :xs="24" :sm="8">
           <!-- 報工單號 -->

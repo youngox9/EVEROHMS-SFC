@@ -2,6 +2,7 @@
   <Layout :auth="true">
     <h2>即時報工作業</h2>
     <SearchBar />
+    <el-divider />
     <el-empty :image-size="200" v-show="!isSearch" />
   </Layout>
 </template>

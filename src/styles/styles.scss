@@ -17,6 +17,7 @@ $md: 768px;
 // @import "element-plus/dist/index.css";
 
 $navWidth: 200px;
+$contentWdith: 1400px;
 
 html,
 body {
@@ -98,10 +99,10 @@ a {
   }
   .content {
     width: 100%;
-    max-width: 1200px;
+    max-width: $contentWdith;
     display: block;
     margin: 0 auto;
-    padding: 12px 24px 80px 12px;
+    padding: 12px 12px 80px 12px;
     @media (max-width: $md) {
       padding: 12px 6px 80px 6px;
     }
@@ -111,23 +112,38 @@ a {
       margin-bottom: 36px;
       width: 100%;
     }
+
+    h3 {
+      font-size: 1.5em;
+      font-weight: bolder;
+      margin-bottom: 36px;
+      // width: 100%;
+      color: black;
+      border-bottom: 2px solid black;
+      display: inline-block;
+      padding-bottom: 6px;
+    }
   }
 }
 
 .footer {
   position: fixed;
   bottom: 0px;
-  left: 0;
-  width: 100%;
+  right: 0;
+  width: calc(100% - #{$navWidth});
   height: 48px;
   box-shadow: 2px 0px 12px #aaa;
   background-color: white;
+  @media (max-width: $md) {
+    width: 100%;
+  }
   .footer-content {
     display: block;
     margin: 0 auto;
-    max-width: 1200px;
+    max-width: $contentWdith;
     width: 100%;
-    padding: 6px 12px 6px $navWidth;
+    height: 100%;
+    padding: 6px 12px 6px 12px;
 
     @media (max-width: $md) {
       padding: 6px 12px 6px 12px;
@@ -136,6 +152,10 @@ a {
     .el-button {
       width: 100%;
       height: 100%;
+      font-size: 18px;
+      line-height: 18px;
+      font-weight: bolder;
+      letter-spacing: 12px;
     }
   }
 }
@@ -219,6 +239,11 @@ a {
   .search-btns {
     flex: 0 auto;
     justify-content: flex-end;
+    .el-space__item {
+      &:last-child {
+        margin-right: 0 !important;
+      }
+    }
   }
 }
 .menu {
@@ -531,9 +556,16 @@ a {
   width: 100%;
 }
 
+.el-form-item__label {
+  color: black;
+  font-weight: 600;
+}
+
 .el-drawer__header {
   .el-drawer__title {
     font-size: 24px;
+    color: $base-color;
+    font-weight: bolder;
   }
 }
 

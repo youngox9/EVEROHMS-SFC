@@ -3,6 +3,7 @@
   <Layout :auth="true">
     <h2>即時報工作業</h2>
     <SearchBar />
+    <el-divider />
     <el-form
       v-if="isSearch"
       @submit.native.prevent
@@ -15,8 +16,7 @@
     >
       <!--  -->
 
-      <el-divider />
-      <h2>{{ form.SFFB009 }}</h2>
+      <h3>{{ form.SFFB009 }}</h3>
       <el-row :gutter="24">
         <el-col :xs="24" :sm="8">
           <!-- 報工單號 -->

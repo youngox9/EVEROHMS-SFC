@@ -1,9 +1,9 @@
 <template>
   <el-dialog
     width="400px"
-    :title="mode === 'add' ? '新增缺點原因' : '編輯缺點原因'"
+    :title="`抽樣與結果 ${mode === 'add' ? '新增缺點原因' : '編輯缺點原因'}`"
     v-model="isOpen"
-    @close="$emit('update:isOpen', false)"
+    :before-close="onClose"
   >
     <el-form :model="form" :rules="rules" ref="formEl" label-width="120px">
       <!-- <el-form-item :label="$t('QCBESEQ')" prop="QCBESEQ">
@@ -91,7 +91,7 @@
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="$emit('update:isOpen', false)">取消</el-button>
+        <el-button @click="toggleOpen(false)">取消</el-button>
         <el-button type="primary" @click="submitform">送出 </el-button>
       </span>
     </template>
@@ -124,6 +124,8 @@ const props = defineProps([
   "onChange",
   "data",
   "rowData",
+  "toggleOpen",
+  "updateList",
 ]);
 const emit = defineEmits(["update:isOpen", "isOpen"]);
 const { siteData } = props;
@@ -270,8 +272,8 @@ async function onEditReason() {
       type: "success",
     });
     props.setCanSave(true);
-    emit("update:isOpen", false);
-    emit("update:getList", false);
+    props.updateList();
+    props.toggleOpen(false);
   } catch (e) {
     console.log(e);
   }
@@ -280,8 +282,6 @@ async function onEditReason() {
 
 async function onAddReason() {
   store.commit("global/setIsLoading", true);
-
-  console.log(props.data, props.data.QCBDSEQ);
   try {
     const res = await axios({
       url: "/common/sfc/aqct300_qcbe_ins01",
@@ -300,8 +300,8 @@ async function onAddReason() {
       type: "success",
     });
     props.setCanSave(true);
-    emit("update:isOpen", false);
-    emit("update:getList", false);
+    props.updateList();
+    props.toggleOpen(false);
   } catch (e) {
     console.log(e);
   }

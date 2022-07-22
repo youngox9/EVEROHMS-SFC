@@ -36,16 +36,21 @@
       <el-space :style="{ width: '100%', justifyContent: 'flex-end' }">
         <!-- 歷史紀錄 -->
         <el-button
-          :disabled="!form.SFFB005"
           type="warning"
           plain
           @click="setDrawer(true)"
+          :disabled="!form.SFFB005"
         >
           紀錄
           <el-icon class="el-icon--right"><List /></el-icon>
         </el-button>
         <!-- 搜尋按鈕 -->
-        <el-button native-type="submit" type="primary" @click="search">
+        <el-button
+          native-type="submit"
+          type="primary"
+          @click="search"
+          :disabled="!form.SFFB005"
+        >
           {{ $t("search") }}
           <el-icon class="el-icon--right">
             <Search />

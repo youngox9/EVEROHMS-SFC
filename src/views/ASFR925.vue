@@ -58,16 +58,16 @@
       </div>
     </el-form>
     <el-divider />
-    <div
+    <el-space
       :style="{
-        display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
+        width: '100%',
       }"
     >
       <el-pagination
-        :style="{ justifyContent: 'flex-end', marginBottom: '12px' }"
+        :style="{ marginBottom: '20px' }"
         background
         v-if="list.length"
         v-model:currentPage="pageConfig.page"
@@ -86,10 +86,7 @@
           }
         "
       />
-      <el-space
-        :style="{ width: '100%', justifyContent: 'flex-end' }"
-        v-if="list.length"
-      >
+      <el-space :style="{ justifyContent: 'flex-end' }" v-if="list.length">
         <el-button type="warning" @click="onExport" plain>
           匯出
           <el-icon class="el-icon--right">
@@ -109,8 +106,8 @@
           </el-icon>
         </el-button>
       </el-space>
-    </div>
-    <el-table :data="list" :style="{ margin: '20px 0' }">
+    </el-space>
+    <el-table :data="list" :style="{ margin: '0 0 20px 0' }">
       <el-table-column
         prop="SFCBDOCNO"
         :label="$t('SFCBDOCNO')"
@@ -157,7 +154,7 @@
         prop="SFCB050"
         :label="$t('SFCB050')"
         align="center"
-        :width="150"
+        :width="200"
       />
       <el-table-column
         prop="SFCB051"
@@ -175,7 +172,7 @@
         prop="SFAA010"
         :label="$t('SFAA010')"
         align="center"
-        :width="150"
+        :width="250"
       />
       <el-table-column
         prop="SFAA012"
@@ -265,7 +262,7 @@
         prop="INTERVAL_TIME"
         :label="$t('INTERVAL_TIME')"
         align="center"
-        :width="150"
+        :width="250"
       />
 
       <el-table-column

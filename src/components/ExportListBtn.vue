@@ -4,6 +4,7 @@
     v-click-outside="onClickOutside"
     :disabled="list.length <= 0"
     type="warning"
+    plain
   >
     匯出
     <el-icon class="el-icon--right"><Download /></el-icon>

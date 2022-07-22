@@ -26,9 +26,7 @@ function getProfile() {
     //
     const profile = JSON.parse(window.localStorage.getItem("auth")) || {};
     return profile;
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
   return {};
 }
 
@@ -58,7 +56,7 @@ function getErrorMsg(e) {
 }
 
 export default function (config = {}) {
-  const { auth = false, showError = true, sucessMsg } = config;
+  const { auth = false, showError = true } = config;
   const { accessToken = "" } = getProfile();
 
   const instance = axios.create({
@@ -74,20 +72,6 @@ export default function (config = {}) {
 
   instance.interceptors.response.use(
     (response) => {
-      if (sucessMsg) {
-        let msg = "";
-        try {
-          msg =
-            typeof sucessMsg === "function" ? sucessMsg(response) : sucessMsg;
-        } catch (e) {
-          console.log(e);
-        }
-        ElNotification({
-          title: "Success",
-          message: msg,
-          type: "success",
-        });
-      }
       return response;
     },
     (error) => {
@@ -95,7 +79,7 @@ export default function (config = {}) {
         const msg = getErrorMsg(error);
         ElNotification({
           title: error?.message || "Error",
-          message: msg || "Network Error",
+          message: msg || "error",
           type: "error",
           duration: 4500,
         });

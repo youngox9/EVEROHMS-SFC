@@ -100,10 +100,23 @@
             ></el-input>
           </el-form-item>
         </el-col>
+
+        <el-col :xs="24" :sm="8">
+          <!-- 合格量 -->
+          <el-form-item :label="$t('QCBA023')">
+            <el-input type="text" v-model="form.QCBA023" disabled />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="8">
+          <!-- 不良數 -->
+          <el-form-item :label="$t('QCBA027')">
+            <el-input type="text" v-model="form.QCBA027" disabled />
+          </el-form-item>
+        </el-col>
         <el-col :xs="24" :sm="8">
           <!-- 檢驗員 -->
           <el-form-item :label="$t('QCBA024')">
-            <el-input type="text" v-model="form.QCBA024" disabled />
+            <el-input type="text" v-model="form.QCBA024" />
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="8">
@@ -150,9 +163,9 @@
     <el-empty :image-size="200" v-if="!isSearch" />
   </Layout>
   <PQCModal
-    :siteData="form"
+    :data="form"
     :isOpen="modalOpen"
-    @update:isOpen="setModalOpen($event)"
+    :toggleOpen="(val) => setModalOpen(val)"
   />
   <PQCHistoryDrawer
     :siteData="form1"
@@ -183,6 +196,10 @@ const [drawer, setDrawer] = useState(false);
 
 const ENT = computed(() => {
   return store?.state?.global?.ENT || "";
+});
+
+const profile = computed(() => {
+  return store?.state?.global?.profile || {};
 });
 
 const [form1, setForm1] = useState({
@@ -223,13 +240,13 @@ async function postSave() {
       url: "/common/sfc/aqct300_qcba_save01",
       method: "post",
       data: {
-        // ...form.value,
+        ...form.value,
         ENT: ENT.value,
-        QCBADOCNO: formData.QCBADOCNO,
-        QCBA024: formData.QCBA024,
-        QCBA023: formData.QCBA023,
-        QCBA027: formData.QCBA027,
-        QCBA022: `${formData.QCBA022}`,
+        // QCBADOCNO: formData.QCBADOCNO,
+        // QCBA024: formData.QCBA024,
+        // QCBA023: formData.QCBA023,
+        // QCBA027: formData.QCBA027,
+        // QCBA022: `${formData.QCBA022}`,
       },
     });
     const msg = res1?.data?.v_message || "";
@@ -286,7 +303,13 @@ async function onSearch() {
     });
     const data = res?.data?.[0];
     if (data) {
-      setForm(data);
+      setForm({
+        ...data,
+        QCBA024:
+          !data.QCBA024 || data.QCBA024 === "0"
+            ? profile.value.id
+            : data.QCBA024,
+      });
       setIsSearch(true);
     } else {
       setForm({});

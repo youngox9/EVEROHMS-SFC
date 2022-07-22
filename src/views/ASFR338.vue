@@ -1,6 +1,6 @@
 <template>
   <Layout :auth="true">
-    <h2>ASFR338工單重工轉出報表</h2>
+    <h2>ASFR338重工轉出報表</h2>
     <el-form
       class="search-bar"
       @submit.native.prevent

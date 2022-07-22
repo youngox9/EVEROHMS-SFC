@@ -8,8 +8,8 @@
   >
     <el-table :data="historyList">
       <el-table-column
-        prop="SFFBDOCNO"
-        :label="$t('SFFBDOCNO')"
+        prop="QCBADOCNO"
+        :label="$t('QCBADOCNO')"
         align="center"
         :width="250"
       />

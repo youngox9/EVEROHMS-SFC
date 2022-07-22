@@ -1,12 +1,12 @@
 <template>
   <!-- PQC -->
   <el-dialog
-    title="缺點原因"
+    title="抽要與結果 缺點原因"
     v-model="isOpen"
-    @close="$emit('update:isOpen', false)"
     width="1200px"
     :close-on-click-modal="true"
     :close-on-press-escape="true"
+    :before-close="onClose"
   >
     <div class="flex-box right">
       <el-button class="submit" type="primary" plain @click="onAddReason()">
@@ -84,9 +84,9 @@
     :data="data"
     :rowData="selectedRowData"
     :isOpen="isModalOpen"
-    @update:isOpen="setIsModalOpen($event)"
-    @update:getList="getList($event)"
     :setCanSave="setCanSave"
+    :updateList="getList"
+    :toggleOpen="(val) => setIsModalOpen(val)"
   />
 </template>
 
@@ -105,7 +105,13 @@ import { VALIDATIONS, useState } from "@/utils";
 
 import PQCReasonModal from "@/components/PQCReasonModal.vue";
 
-const props = defineProps(["data", "isOpen", "setCanSave", "getMainList"]);
+const props = defineProps([
+  "data",
+  "isOpen",
+  "setCanSave",
+  "updateList",
+  "toggleOpen",
+]);
 const emit = defineEmits(["update:isOpen", "isOpen"]);
 const store = useStore();
 const router = useRouter();
@@ -123,12 +129,10 @@ watch(
   () => [props.isOpen, props.data],
   (val, prev) => {
     const [isOpen, data] = val;
-
     if (isOpen) {
       getList();
     } else {
       setList([]);
-      props.getMainList();
     }
   },
   { deep: true }
@@ -136,6 +140,10 @@ watch(
 
 const [selectedList, setSelectedList] = useState([]);
 
+function onClose() {
+  props.updateList();
+  props.toggleOpen(false);
+}
 function onSelectionChange(val) {
   setSelectedList(val);
 }

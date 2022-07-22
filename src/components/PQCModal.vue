@@ -10,7 +10,7 @@
     :show-close="canSave"
     fullscreen
   >
-    <el-table :data="list" @selection-change="onSelectionChange">
+    <el-table :data="list">
       <el-table-column
         prop="QCBDSEQ"
         :label="$t('QCBDSEQ')"
@@ -55,11 +55,11 @@
     <template #footer>
       <span class="dialog-footer">
         <el-tooltip
-          v-if="!canSave"
           class="box-item"
           effect="dark"
           content="請至少新增一項缺點原因"
           placement="top"
+          :disabled="canSave"
         >
           <div :style="{ width: '100%' }">
             <el-button
@@ -71,24 +71,15 @@
             </el-button>
           </div>
         </el-tooltip>
-
-        <el-button
-          size="large"
-          @click="onSave"
-          :disabled="!canSave"
-          :style="{ width: '100%' }"
-          v-if="canSave"
-          >關閉
-        </el-button>
       </span>
     </template>
   </el-dialog>
   <PQCReasonListModal
-    :data="{ ...siteData, ...selectedData }"
+    :data="{ ...data, ...selectedData }"
     :isOpen="isModalOpen"
     :setCanSave="setCanSave"
-    @update:isOpen="setIsModalOpen($event)"
-    :getMainList="getList"
+    :toggleOpen="(val) => setIsModalOpen(val)"
+    :updateList="getList"
   />
 </template>
 
@@ -106,7 +97,7 @@ import axios from "@/axios";
 import { VALIDATIONS, useState } from "@/utils";
 import PQCReasonListModal from "@/components/PQCReasonListModal.vue";
 
-const props = defineProps(["siteData", "isOpen"]);
+const props = defineProps(["data", "isOpen", "toggleOpen"]);
 const emit = defineEmits(["update:isOpen", "isOpen"]);
 const store = useStore();
 const router = useRouter();
@@ -118,9 +109,9 @@ const [canSave, setCanSave] = useState(false);
 const { locale } = useI18n();
 
 watch(
-  () => [props.isOpen, props.siteData],
+  () => [props.isOpen, props.data],
   (val, prev) => {
-    const [isOpen, siteData] = val;
+    const [isOpen, data] = val;
     if (isOpen) {
       getList();
     } else {
@@ -137,13 +128,8 @@ const ENT = computed(() => {
   return store?.state?.global?.ENT || "";
 });
 
-function onSelectionChange(val) {
-  console.log(val);
-  setSelectedList(val);
-}
-
 async function getList() {
-  const { QCBADOCNO } = props.siteData;
+  const { QCBADOCNO } = props.data;
   if (QCBADOCNO) {
     store.commit("global/setIsLoading", true);
     try {
@@ -155,7 +141,7 @@ async function getList() {
           QCBDDOCNO: QCBADOCNO,
         },
       });
-      console.log(res.data);
+      console.log(res?.data);
       setList(res?.data || []);
     } catch (e) {
       console.log(e);
@@ -171,33 +157,6 @@ async function onSelect(rowData) {
 }
 
 async function onSave() {
-  emit("update:isOpen", false);
-  // store.commit("global/setIsLoading", true);
-  // try {
-  //   const { QCBADOCNO } = props.siteData;
-  //   console.log(selectedList);
-  //   const data = selectedList.value.map((o) => {
-  //     const { QCBDSEQ, QCBD001, QCBD002, QCBD003, QCBD004 } = o;
-  //     return {
-  //       ENT: ENT.value,
-  //       QCBEDOCNO: QCBADOCNO,
-  //       QCBESEQ: QCBDSEQ,
-  //       QCBE001: QCBD001,
-  //       QCBE002: QCBD002,
-  //       QCBE003: QCBD003,
-  //       QCBE004: QCBD004,
-  //     };
-  //   });
-  //   const res = await axios({
-  //     url: "/common/sfc/aqct300_qcbe_save01",
-  //     method: "post",
-  //     data,
-  //   });
-  //   emit("update:isOpen", false);
-  // } catch (e) {
-  //   console.log(e);
-  // }
-
-  // store.commit("global/setIsLoading", false);
+  props.toggleOpen(false);
 }
 </script>

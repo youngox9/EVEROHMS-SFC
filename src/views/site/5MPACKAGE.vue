@@ -3,6 +3,7 @@
   <Layout :auth="true">
     <h2>即時報工作業</h2>
     <SearchBar :path="'5mpackage'" />
+    <el-divider />
     <el-form
       @submit.native.prevent
       :model="form"
@@ -15,8 +16,7 @@
     >
       <!--  -->
 
-      <el-divider />
-      <h2>{{ form.SFFB009 }}</h2>
+      <h3>{{ form.SFFB009 }}</h3>
       <el-row :gutter="24">
         <el-col :xs="24" :sm="8">
           <!-- 報工單號 -->
@@ -180,6 +180,7 @@ import axios from "@/axios";
 import { VALIDATIONS, useState } from "@/utils";
 import SearchBar from "@/components/SearchBar.vue";
 import ReasonListModal from "@/components/ReasonListModal.vue";
+import ForceReasonModal from "@/components/ForceReasonModal.vue";
 
 const INITIAL_FORMDATA = {
   SFFBUD017: 0,
